@@ -1,8 +1,18 @@
-const express = require('express');
+const express = require('express'); 
 const app = express();
 const path = require('path');
+const mongoose = require('mongoose');
 
-// public folder for static files
+// connect mongo db
+mongoose.connect('mongodb://127.0.0.1:27017/e-shop')
+.then(()=>{
+    console.log("connected to db successfully");
+})
+.catch((err)=>{
+    console.log("error in connecting to db",err);
+})
+
+// views folder for static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // setting up views
