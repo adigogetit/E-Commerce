@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const assets = require('./assest');
+const productroutes = require('./routes/productRoutes');
 
 // connect mongo db
 mongoose.connect('mongodb://127.0.0.1:27017/e-shop')
@@ -13,15 +14,18 @@ mongoose.connect('mongodb://127.0.0.1:27017/e-shop')
     console.log("error in connecting to db",err);
 })
 
-// views folder for static files
+// views folder for static files like css and js
 app.use(express.static(path.join(__dirname, 'public')));
-// setting up views
+// setting up view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
 // seed the database
 assets();
+
+// product routes - har incoming request to /products will be handled by productroutes
+app.use(productroutes);
 
 app.listen(3000,()=>{
     console.log("server is live");
