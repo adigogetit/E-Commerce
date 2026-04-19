@@ -20,6 +20,13 @@ router.post('/products' ,async(req,res)=>{
     res.redirect('/products')
 })
 
+// to show a particular product
+router.get('/products/:id' , async(req,res)=>{
+    let {id} = req.params;
+    let foundProduct = await Product.findById(id);
+    res.render('products/show' , {foundProduct})
+})
+
 
 module.exports = router;
  
