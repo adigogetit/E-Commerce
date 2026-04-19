@@ -23,6 +23,9 @@ app.set('view engine', 'ejs'); // ejs is a templating language (read the views f
 app.engine('ejs', ejsMate); // for using layout in ejs
 app.set('views', path.join(__dirname, 'views'));
 
+// middleware to parse the form data (so we dont get undefined when we submit the form)
+app.use(express.urlencoded({extended:true}));
+
 
 // seed the database
 // assets();

@@ -1,0 +1,79 @@
+<% layout('layouts/boilerplate') %>
+
+<%- include('../partials/navbar') %>    
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    
+    <div class="col-lg-6 col-md-8">
+      
+      <div class="card shadow-sm border-0 p-4 form-card">
+        
+        <h3 class="text-center mb-4 fw-bold">Add New Product</h3>
+
+        <form action="/products" method="POST">
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="naam" class="form-label fw-semibold">Product Name</label>
+            <input type="text" class="form-control" name="name" id="naam" placeholder="Enter product name" required>
+          </div>
+
+          <!-- Image -->
+          <div class="mb-3">
+            <label for="img" class="form-label fw-semibold">Image URL</label>
+            <input type="text" class="form-control" name="img" id="img" placeholder="Paste image URL" required>
+          </div>
+
+          <!-- Price -->
+          <div class="mb-3">
+            <label for="paisa" class="form-label fw-semibold">Price (₹)</label>
+            <input type="number" class="form-control" name="price" id="paisa" placeholder="Enter price" required>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="desc" class="form-label fw-semibold">Description</label>
+            <textarea 
+              name="desc" 
+              id="desc" 
+              rows="4" 
+              class="form-control"
+              placeholder="Write product description..." 
+              required>
+            </textarea>
+          </div>
+
+          <!-- Button -->
+          <div class="d-grid mt-4">
+            <button class="btn btn-success btn-lg">
+              Add Product
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+        
+  </div>
+</div>
+
+<style>
+  .form-card {
+    border-radius: 12px;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #198754;
+  }
+
+  textarea {
+    resize: none;
+  }
+</style>
+
+</body>
+</html>
