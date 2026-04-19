@@ -32,6 +32,7 @@
                  View
               </a>
 
+              <!-- we use method override to delete the product and use /products/<%=item._id%>?_method=DELETE  -->
               <form action="/products/<%=item._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-outline-danger btn-sm">
                   Delete

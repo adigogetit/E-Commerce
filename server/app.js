@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const assets = require('./assest');
 const productroutes = require('./routes/productRoutes');
 const ejsMate = require('ejs-mate');
+const methodOverride = require('method-override')
 
 // connect mongo db
 mongoose.connect('mongodb://127.0.0.1:27017/e-shop')
@@ -25,6 +26,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 // middleware to parse the form data (so we dont get undefined when we submit the form)
 app.use(express.urlencoded({extended:true}));
+
+// method override to use put and delete methods in forms
+app.use(methodOverride('_method'));
 
 
 // seed the database

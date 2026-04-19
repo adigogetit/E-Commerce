@@ -34,6 +34,24 @@ router.get('/products/:id/edit' , async(req,res)=>{
     res.render('products/edit' , {foundProduct})
 })
 
+// to actually edit the data in db
+router.patch('/products/:id' , async(req,res)=>{
+    let {id} = req.params;
+    let {name , img , price , desc} = req.body;
+    await Product.findByIdAndUpdate( id , {name , img , price , desc}  )
+    res.redirect(`/products/${id}`);
+})
+
+
+// to delete a product
+router.delete('/products/:id' , async(req,res)=>{
+    let {id} = req.params;
+    const product = await Product.findById(id);
+
+    await Product.findByIdAndDelete(id);
+    res.redirect('/products');
+})
+
 
 module.exports = router;
  

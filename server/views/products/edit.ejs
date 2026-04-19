@@ -10,7 +10,8 @@
 
         <h3 class="mb-4 text-center">Edit Product</h3>
 
-        <form action="/products/<%= foundProduct._id %>?_method=PATCH" method="POST">
+        <!-- here we use method override to update and use this /products/<%= foundProduct._id %>?_method=PATCH  -->
+        <form action="/products/<%= foundProduct._id %>?_method=PATCH" method="POST"> 
 
           <!-- Name -->
           <div class="mb-3">
