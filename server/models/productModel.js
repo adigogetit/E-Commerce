@@ -22,6 +22,7 @@ const productSchema = new mongoose.Schema({
     },
     reviews:[
         {
+            // this is how we create a relationship between two models in mongoose (one to many relationship)
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Review'
         }
