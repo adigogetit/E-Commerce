@@ -9,6 +9,7 @@ const reviewSchema = new mongoose.Schema({
         type:String,
         trim:true
     }
-} , {timestamps:true})
+} , {timestamps:true})// if we want to know when the review was created and updated then we can use timestamps
+
 let Review = mongoose.model('Review' , reviewSchema);
 module.exports = Review;

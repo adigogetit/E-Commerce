@@ -50,6 +50,11 @@ router.delete('/products/:id' , async(req,res)=>{
     let {id} = req.params;
     const product = await Product.findById(id);
 
+    // to delete reviews associated with the product -- easy way
+    // for(let id of product.reviews){
+    //     await Review.findByIdAndDelete(id);
+    // }
+
     await Product.findByIdAndDelete(id);
     res.redirect('/products');
 })
