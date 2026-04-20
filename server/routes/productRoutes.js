@@ -23,7 +23,9 @@ router.post('/products' ,async(req,res)=>{
 // to show a particular product
 router.get('/products/:id' , async(req,res)=>{
     let {id} = req.params;
-    let foundProduct = await Product.findById(id);
+
+    // jab ek particular product ko show karna hai to uske sath uske reviews bhi show karne hai to hume us product ke reviews ko populate karna padega
+    let foundProduct = await Product.findById(id).populate('reviews');// here we are populating the reviews aray
     res.render('products/show' , {foundProduct})
 })
 

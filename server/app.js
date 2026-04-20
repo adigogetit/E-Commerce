@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const assets = require('./assest');
 const productroutes = require('./routes/productRoutes');
+const reviewroutes = require('./routes/reviewRoutes');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override')
 
@@ -36,6 +37,8 @@ app.use(methodOverride('_method'));
 
 // product routes - har incoming request to /products will be handled by productroutes
 app.use(productroutes);
+// review routes 
+app.use(reviewroutes)
 
 app.listen(3000,()=>{
     console.log("server is live");
