@@ -39,8 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setting up view engine
 app.set('view engine', 'ejs'); // ejs is a templating language (read the views file)
-app.engine('ejs', ejsMate); // for using layout in ejs
 app.set('views', path.join(__dirname, 'views'));
+app.engine('ejs', ejsMate); // for using layout in ejs like navbar and boilerplate code
 
 // middleware to parse the form data (so we dont get undefined when we submit the form)
 app.use(express.urlencoded({extended:true}));
