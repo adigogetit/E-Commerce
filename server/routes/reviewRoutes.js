@@ -17,6 +17,8 @@ router.post('/products/:id/review', validateReview, async (req, res) => {
         await review.save();
         await product.save();
 
+        req.flash('success', 'Review added successfully'); // flash message for success 
+
         res.redirect(`/products/${id}`);
     }
     catch (e) {

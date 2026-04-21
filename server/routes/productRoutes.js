@@ -27,6 +27,7 @@ router.post('/products', validateProduct, async (req, res) => {
     try {
         let { name, img, price, desc } = req.body;
         await Product.create({ name, img, price, desc })
+        req.flash('success' , 'Product added successfully');
         res.redirect('/products')
     } catch (err) {
         res.status(500).render('error', { err: e.message });
@@ -40,7 +41,9 @@ router.get('/products/:id', async (req, res) => {
 
         // jab ek particular product ko show karna hai to uske sath uske reviews bhi show karne hai to hume us product ke reviews ko populate karna padega
         let foundProduct = await Product.findById(id).populate('reviews');// here we are populating the reviews aray
-        res.render('products/show', { foundProduct })
+
+        res.render('products/show', { foundProduct , mes:req.flash('success')});
+
     } catch (err) {
         res.status(500).render('error', { err: e.message });
     }
@@ -63,6 +66,7 @@ router.patch('/products/:id', validateProduct, async (req, res) => {
         let { id } = req.params;
         let { name, img, price, desc } = req.body;
         await Product.findByIdAndUpdate(id, { name, img, price, desc })
+        req.flash('success' , 'Product edited successfully');
         res.redirect(`/products/${id}`);
     } catch (err) {
         res.status(500).render('error', { err: e.message });
@@ -82,6 +86,8 @@ router.delete('/products/:id', async (req, res) => {
         // }
 
         await Product.findByIdAndDelete(id);
+
+        req.flash('success' , 'Product deleted successfully');
         res.redirect('/products');
     } catch (err) {
         res.status(500).render('error', { err: e.message });
