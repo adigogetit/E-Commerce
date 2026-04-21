@@ -7,9 +7,13 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/userModel');
 
 const reviewroutes = require('./routes/reviewRoutes');
 const productroutes = require('./routes/productRoutes');
+const authroutes = require('./routes/authRoutes');
 
 
 // connect mongo db
@@ -25,7 +29,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/e-shop')
 let configSession = {
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true , 
+    saveUninitialized: true ,  
     cookie: { 
         httpOnly: true ,
         expires: Date.now() + 24*7*60*60*1000 , 
@@ -54,6 +58,12 @@ app.use(flash());
 // session is used here 
 app.use(session(configSession));
 
+// passport is used here
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // locals is used to make the current user and flash messages available in all the templates without having to pass them in every render method
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;
@@ -63,6 +73,10 @@ app.use((req,res,next)=>{
 })
 
 
+// PASSPORT WAALI
+passport.use(new LocalStrategy(User.authenticate()));
+
+
 // seed the database
 // assets();
 
@@ -70,6 +84,8 @@ app.use((req,res,next)=>{
 app.use(productroutes);
 // review routes 
 app.use(reviewroutes)
+// auth routes 
+app.use(authroutes)
 
 app.listen(3000,()=>{
     console.log("server is live");
