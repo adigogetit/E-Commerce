@@ -1,6 +1,7 @@
 const express = require('express');
 const Product = require('../models/productModel');
 const router = express.Router() //mini instance
+const {validateProduct} = require('../middleware');
 
 // to show all the products
 router.get('/products', async (req, res) => {
@@ -22,7 +23,7 @@ router.get('/product/new', (req, res) => {
 })
 
 // to add new product
-router.post('/products', async (req, res) => {
+router.post('/products', validateProduct, async (req, res) => {
     try {
         let { name, img, price, desc } = req.body;
         await Product.create({ name, img, price, desc })
@@ -57,7 +58,7 @@ router.get('/products/:id/edit', async (req, res) => {
 })
 
 // to actually edit the data in db
-router.patch('/products/:id', async (req, res) => {
+router.patch('/products/:id', validateProduct, async (req, res) => {
     try {
         let { id } = req.params;
         let { name, img, price, desc } = req.body;

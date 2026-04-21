@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router() //mini instance
 const Product = require('../models/productModel')
 const Review = require('../models/reviewModel')
+const {validateReview} = require('../middleware');
 
-router.post('/products/:id/review', async (req, res) => {
+// to add a review for a particular product
+router.post('/products/:id/review', validateReview, async (req, res) => {
     try {
         let { id } = req.params; // get from url
         let { rating, comment } = req.body;  // get from form data
