@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
 
     const user = new User({ email, username, role });
     const newUser = await User.register(user, password);
-    
+
     // to get direct login after registration without asking to login again
     req.login(newUser, function (err) {
         if (err) { return next(err) }
@@ -41,12 +41,14 @@ router.post('/login',
 
 // logout
 router.get('/logout', (req, res) => {
-    () => {
-        req.logout();
-    }
-    req.flash('success', 'goodbye friends, see you again')
-    res.redirect('/login');
-
+    req.logout((err) => {
+        if (err) {
+            return res.redirect('/products');
+        }
+        req.flash('success', 'goodbye friends, see you again');
+        res.redirect('/login');
+    });
 })
+
 module.exports = router;
 

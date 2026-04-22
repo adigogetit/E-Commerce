@@ -1,7 +1,7 @@
 const express = require('express');
 const Product = require('../models/productModel');
 const router = express.Router() //mini instance
-const {validateProduct,isLoggedIn} = require('../middleware');
+const {validateProduct,isLoggedIn , isseller} = require('../middleware');
 
 // to show all the products
 router.get('/products', async (req, res) => {
@@ -51,7 +51,7 @@ router.get('/products/:id', isLoggedIn, async (req, res) => {
 })
 
 // form to edit the product
-router.get('/products/:id/edit', isLoggedIn, async (req, res) => {
+router.get('/products/:id/edit', isLoggedIn, isseller, async (req, res) => {
     try {
         let { id } = req.params;
         let foundProduct = await Product.findById(id);
@@ -62,7 +62,7 @@ router.get('/products/:id/edit', isLoggedIn, async (req, res) => {
 })
 
 // to actually edit the data in db
-router.patch('/products/:id', validateProduct, isLoggedIn,  async (req, res) => {
+router.patch('/products/:id', validateProduct, async (req, res) => {
     try {
         let { id } = req.params;
         let { name, img, price, desc } = req.body;
@@ -76,7 +76,7 @@ router.patch('/products/:id', validateProduct, isLoggedIn,  async (req, res) => 
 
 
 // to delete a product
-router.delete('/products/:id', isLoggedIn,  async (req, res) => {
+router.delete('/products/:id', isLoggedIn, isseller ,  async (req, res) => {
     try {
         let { id } = req.params;
         const product = await Product.findById(id);
