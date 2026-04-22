@@ -13,10 +13,14 @@ router.post('/register', async (req, res) => {
     let { email, password, username, role } = req.body;
 
     const user = new User({ email, username, role });
-
     const newUser = await User.register(user, password);
-
-    res.redirect('/login');
+    
+    // to get direct login after registration without asking to login again
+    req.login(newUser, function (err) {
+        if (err) { return next(err) }
+        req.flash('success', 'welcome,  you are registed succesfully');
+        return res.redirect('/products');
+    })
 })
 
 // to get login form
@@ -25,15 +29,24 @@ router.get('/login', (req, res) => {
 })
 
 // to actually login via the db
-router.post('/login', 
-    passport.authenticate('local', { 
-        failureRedirect: '/login', 
-        failureMessage: true 
+router.post('/login',
+    passport.authenticate('local', {
+        failureRedirect: '/login',
+        failureMessage: true
     }),
-    (req,res)=>{
-        req.flash('success' , 'welcome back')
+    (req, res) => {
+        req.flash('success', 'welcome back')
         res.redirect('/products');
-})
+    })
 
+// logout
+router.get('/logout', (req, res) => {
+    () => {
+        req.logout();
+    }
+    req.flash('success', 'goodbye friends, see you again')
+    res.redirect('/login');
+
+})
 module.exports = router;
 
