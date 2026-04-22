@@ -38,12 +38,12 @@ let configSession = {
 }
 
 
-// views folder for static files like css and js
+// serves static files like css and js from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // setting up view engine
 app.set('view engine', 'ejs'); // ejs is a templating language (read the views file)
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));// views folder for static files like css and js
 app.engine('ejs', ejsMate); // for using layout in ejs like navbar and boilerplate code
 
 // middleware to parse the form data (so we dont get undefined when we submit the form)
@@ -59,14 +59,14 @@ app.use(flash());
 app.use(session(configSession));
 
 // passport is used here
-app.use(passport.initialize());
-app.use(passport.session());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use(passport.initialize());//start passport
+app.use(passport.session()); // connect with express-session
+passport.serializeUser(User.serializeUser()); //What to store in session
+passport.deserializeUser(User.deserializeUser()); //How to get full user back from ID
 
 // locals is used to make the current user and flash messages available in all the templates without having to pass them in every render method
 app.use((req,res,next)=>{
-    res.locals.currentUser = req.user;// when login we get all info about user from the db and we store it in req.user and we want to make it available in all the templates so we use res.locals.currentUser = req.user
+    res.locals.currentUser = req.user;// when login we get all info about user from the db and we store it in req.user and we want to make it available in all the templates
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -74,7 +74,7 @@ app.use((req,res,next)=>{
 
 
 // PASSPORT WAALI
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy(User.authenticate())); //connect passport to user-model
 
 
 // seed the database

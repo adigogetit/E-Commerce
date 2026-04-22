@@ -1,6 +1,7 @@
 const express = require('express');
-const Product = require('../models/productModel');
 const router = express.Router() //mini instance
+
+const Product = require('../models/productModel');
 const {validateProduct,isLoggedIn , isseller} = require('../middleware');
 
 // to show all the products
