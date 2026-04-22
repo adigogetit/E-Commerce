@@ -10,9 +10,11 @@
       <li>
         <a class="nav-link fw-semibold active" href="/products">Home</a>
       </li>
-      <li>
-        <a class="nav-link fw-semibold" href="/product/new">Add Product</a>
-      </li>
+      <% if(currentUser && currentUser.role==='seller' ){ %>
+        <li class="nav-item">
+          <a class="nav-link" href="/product/new">New</a>
+        </li>
+        <% } %>
     </ul>
 
     <div class="d-flex align-items-center gap-3">

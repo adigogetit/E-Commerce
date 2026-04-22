@@ -66,7 +66,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // locals is used to make the current user and flash messages available in all the templates without having to pass them in every render method
 app.use((req,res,next)=>{
-    res.locals.currentUser = req.user;
+    res.locals.currentUser = req.user;// when login we get all info about user from the db and we store it in req.user and we want to make it available in all the templates so we use res.locals.currentUser = req.user
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
